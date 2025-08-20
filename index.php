@@ -25,17 +25,16 @@
             <div class="col-md-4">
                 <!--Formulá<rio-->
                 <div class="card card-body">
-                    <form action="a" method="POST">
+                    <form action="save.php" method="POST">
                         <div class="form-group">
-                            <input type="text" name="titulo" class="form-control"
+                            <input type="text" name="title" class="form-control"
                                 placeholder="Task Title" autofocus>
                         </div>
                         <div class="form-group">
-                            <textarea name="descricao" rows="2" class="form-control"
-                                placeholder="descrição da tarefa">
-                        </textarea>
+                            <textarea name="description" rows="2" class="form-control"
+                                placeholder="descrição da tarefa"></textarea>
                         </div>
-                        <input type="submit" name="salvar" class="btn btn-sucess btn-black"
+                        <input type="submit" name="salvar" class="btn btn-success btn-block"
                             value="Save Task">
                     </form>
                 </div>
@@ -47,7 +46,7 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>cód</th>
                             <th>titulo</th>
                             <th>Descrição</th>
                             <th>Criado em</th>
@@ -55,19 +54,36 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Atividade</td>
-                            <td>Descrição</td>
-                            <td>15-08-2025</td>
-                            <td><a href="a" class="btn btn-secondary">
-                                    <i class="fas fa-marker"></i>
-                                </a>
-                                <a href="a" class="btn btn-danger">
-                                    <i class="far fa-trash-alt"></i>
-                                </a>
-                            </td>
-                        </tr>
+                       <?php
+                            require_once 'conn.php';
+                            $query = "SELECT id, title, description, created_at
+                            FROM crud_php";
+                            $result = $conn->query($query);
+ 
+                            if($result->num_rows > 0){
+                                while($row = $result->fetch_assoc()){
+                                 ?>
+                                <tr>
+                                <td><?php echo $row['id']; ?></td>
+                                <td><?php echo $row['title']; ?></td>
+                                <td><?php echo $row['description']; ?></td>
+                                <td><?php echo $row['created_at']; ?></td>
+                                <td><a href="a" class="btn btn-secondary">
+                                        <i class="fas fa-marker"></i>
+                                    </a>
+                                    <a href="a" class="btn btn-danger">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <?php
+                                }
+ 
+                            } else{
+                                echo "<tr><td colspan='5'>Nenhuma tarefa encontrada!</td></tr>";
+                            }
+                            $conn->close();
+                            ?>                  
                     </tbody>
                 </table>
             </div>
