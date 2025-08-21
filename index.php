@@ -71,7 +71,7 @@
                                 <td><a href="a" class="btn btn-secondary">
                                         <i class="fas fa-marker"></i>
                                     </a>
-                                    <a href="a" class="btn btn-danger">
+                                    <a href="delete.php?id=<?=$row['id']; ?>" class="btn btn-danger">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
                                 </td>
